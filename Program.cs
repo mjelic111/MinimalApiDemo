@@ -7,25 +7,24 @@ using MinimalAPiDemo.EndpointExtensions;
 using MinimalAPiDemo.Services;
 
 var builder = WebApplication.CreateBuilder(args);
-// services registration
-builder.Services.AddSingleton<IDateUtils, DateUtils>();
-// auth
-builder.Services.AddAuthorization();
-builder.AddBearerAuthentication();
-// swagger
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+#region  config
+// // services registration
+// builder.Services.AddSingleton<IDateUtils, DateUtils>();
+// // auth
+// builder.AddBearerAuthentication();
+// // swagger
+// builder.AddSwagger();
+#endregion config
 
 var app = builder.Build();
-// auth
-app.UseAuthentication();
-app.UseAuthorization();
-
-// configure endpoints, middleware
-
+#region  config
+// // auth
+// app.UseBearerAuthentication();
+// // swagger
+// app.UseSwaggerAndUI();
+// // map endpoints
+// app.MapMinimalEndpoints();
+#endregion config
+// configure endpoints
 app.MapGet("/", () => "Hello World!");
-
-app.UseSwagger();
-app.UseSwaggerUI();
-app.MapMinimalEndpoints();
 app.Run("http://localhost:9000/");

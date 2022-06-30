@@ -4,12 +4,12 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace MinimalAPiDemo;
 
-public static class AuthExtensions
+public static class Extensions
 {
 
     public static WebApplicationBuilder AddBearerAuthentication(this WebApplicationBuilder builder)
     {
-
+        builder.Services.AddAuthorization();
         builder.Services.AddAuthentication(o =>
     {
         o.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -30,5 +30,26 @@ public static class AuthExtensions
         };
     });
         return builder;
+    }
+
+    public static WebApplicationBuilder AddSwagger(this WebApplicationBuilder builder)
+    {
+        builder.Services.AddEndpointsApiExplorer();
+        builder.Services.AddSwaggerGen();
+        return builder;
+    }
+
+    public static WebApplication UseBearerAuthentication(this WebApplication app)
+    {
+        app.UseAuthentication();
+        app.UseAuthorization();
+        return app;
+    }
+
+    public static WebApplication UseSwaggerAndUI(this WebApplication app)
+    {
+        app.UseSwagger();
+        app.UseSwaggerUI();
+        return app;
     }
 }
